@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Currency Converter</h1>
+    <input type="number" id="amount" placeholder="Enter amount" />
+    <div>
+      <label>From:</label>
+      <select id="from"></select>
+    </div>
+    <div>
+      <label>To:</label>
+      <select id="to"></select>
+    </div>
+    <button onclick="convert()">Convert</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const rates = {
+      USD: 1,
+      EUR: 0.89,
+      GBP: 0.77,
+      RUB: 91,
+      UZS: 12800,
+      KZT: 460,
+      CNY: 7.1,
+      JPY: 157,
+      INR: 83,
+      TRY: 32,
+      AED: 3.67,
+      AFN: 72,
+      ALL: 89,
+      AMD: 390,
+      ANG: 1.79,
+      AOA: 880,
+      ARS: 920,
+      AUD: 1.48,
+      AWG: 1.79,
+      AZN: 1.7,
+      BAM: 1.75,
+      BBD: 2,
+      BDT: 109,
+      BGN: 1.75,
+      BHD: 0.38,
+      BIF: 2850,
+      BMD: 1,
+      BND: 1.35,
+      BOB: 6.9,
+      BRL: 5.1,
+      BSD: 1,
+      BTN: 83,
+      BWP: 13.5,
+      BYN: 3.2,
+      BZD: 2,
+      CAD: 1.35,
+      CHF: 0.88,
+      CLP: 950,
+      COP: 4000,
+      CRC: 530,
+      CUP: 24,
+      CVE: 110,
+      CZK: 22,
+      DJF: 178,
+      DKK: 6.6,
+      DOP: 58,
+      DZD: 135,
+      EGP: 47,
+      ETB: 57
+    };
+
+    const currencies = Object.keys(rates);
+
+    const fromSelect = document.getElementById("from");
+    const toSelect = document.getElementById("to");
+
+    currencies.forEach(curr => {
+      const optionFrom = document.createElement("option");
+      optionFrom.value = curr;
+      optionFrom.textContent = curr;
+      fromSelect.appendChild(optionFrom);
+
+      const optionTo = document.createElement("option");
+      optionTo.value = curr;
+      optionTo.textContent = curr;
+      toSelect.appendChild(optionTo);
+    });
+
+    fromSelect.value = "USD";
+    toSelect.value = "UZS";
+
+    function convert() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const from = fromSelect.value;
+      const to = toSelect.value;
+
+      if (isNaN(amount) || amount <= 0) {
+        document.getElementById("result").innerText = "Enter a valid amount";
+        return;
+      }
+
+      const usdAmount = amount / rates[from];
+      const converted = usdAmount * rates[to];
+
+      document.getElementById("result").innerText =
+        `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+    }
+  </script>
+</body>
+</html>
